@@ -5,7 +5,6 @@ import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import 'dotenv/config'
 
 const SignUp = ({closeBtn , onSwitchToSignUp}) => {
   const {emailInput , setEmailInput , passwordInput , setPasswordInput , name , setName , setShowLogin }  = useContext(AppContext)
@@ -15,7 +14,7 @@ const SignUp = ({closeBtn , onSwitchToSignUp}) => {
   const handleSignup = async (e) => {
   e.preventDefault();
   try {
-    const response = await axios.post(`${process.env.BACKEND_URL}/api/auth/signup`, {
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`, {
       name : name ,
       email: emailInput,
       password: passwordInput,

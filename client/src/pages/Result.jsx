@@ -2,7 +2,6 @@ import { useContext } from "react";
 import axios from 'axios'
 import { AppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
-import 'dotenv/config'
 
 const Result = () => {
   const {prompt, setprompt , isLoading , setIsLoading ,image , setImage ,isImageLoaded , setIsImageLoaded , setCreditBalance } = useContext(AppContext)
@@ -18,7 +17,7 @@ const Result = () => {
 
   try {
     const response = await axios.post(
-      `${process.env.BACKEND_URL}/api/image/generate-image`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/image/generate-image`,
       { prompt: prompt },
       {
         headers: {

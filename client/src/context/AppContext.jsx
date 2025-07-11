@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { createContext, useState } from "react";
 import { assets } from "../assets/assets";
 import axios from "axios";
-import 'dotenv/config'
+
 
 export const AppContext = createContext();
 
@@ -35,7 +35,7 @@ export const AppContextProvider = (props) => {
 }, []);
 
   const getCredits = async () => {
-    const { data } = await axios.get(`${process.env.BACKEND_URL}/api/auth/credit`, {
+    const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/credit`, {
      headers: {
   Authorization: `Bearer ${token}`,
 }
