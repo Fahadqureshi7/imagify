@@ -35,7 +35,7 @@ export const AppContextProvider = (props) => {
 }, []);
 
   const getCredits = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/credit`, {
+    const { data } = await axios.get(`https://imagify-ymf5.onrender.com/api/auth/credit`, {
      headers: {
   Authorization: `Bearer ${token}`,
 }

@@ -17,7 +17,7 @@ const Result = () => {
 
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/api/image/generate-image`,
+      `https://imagify-ymf5.onrender.com/api/image/generate-image`,
       { prompt: prompt },
       {
         headers: {

@@ -13,7 +13,7 @@ const Login = ({closeBtn , onSwitchToLogin}) => {
   const handleLoginUser = async (e) => {
   e.preventDefault();
   try {
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/login`, {
+    const response = await axios.post(`https://imagify-ymf5.onrender.com/api/auth/login`, {
       email: emailInput,
       password: passwordInput,
     });

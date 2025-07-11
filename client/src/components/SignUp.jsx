@@ -1,46 +1,52 @@
-import React from 'react';
-import { assets } from '../assets/assets';
-import { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import React from "react";
+import { assets } from "../assets/assets";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const SignUp = ({closeBtn , onSwitchToSignUp}) => {
-  const {emailInput , setEmailInput , passwordInput , setPasswordInput , name , setName , setShowLogin }  = useContext(AppContext)
+const SignUp = ({ closeBtn, onSwitchToSignUp }) => {
+  const {
+    emailInput,
+    setEmailInput,
+    passwordInput,
+    setPasswordInput,
+    name,
+    setName,
+    setShowLogin,
+  } = useContext(AppContext);
 
-  
   const handleSignup = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`, {
-      name : name ,
-      email: emailInput,
-      password: passwordInput,
-    });
-    toast.success('Account created successfully!');
-    setShowLogin('login')
-    setName('')
-    setEmailInput('')
-    setPasswordInput('')
-    const { user, token } = response.data;     
-  
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `https://imagify-ymf5.onrender.com/api/auth/signup`,
+        {
+          name: name,
+          email: emailInput,
+          password: passwordInput,
+        }
+      );
+      toast.success("Account created successfully!");
+      setShowLogin("login");
+      setName("");
+      setEmailInput("");
+      setPasswordInput("");
+      const { user, token } = response.data;
 
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+    } catch (error) {
+      console.error("Signup failed:", error);
+      toast.error(error.response?.data?.error || "Signup failed");
+    }
+  };
 
-  } catch (error) {
-    console.error('Signup failed:', error);
-     toast.error(error.response?.data?.error || 'Signup failed');
-    
-  }
-};
-
-    
   return (
     <div className="fixed inset-0 z-10 backdrop-blur-sm bg-black/30 flex justify-center items-center">
       <form
         className="relative bg-white p-10 rounded-xl text-slate-500 max-w-md  "
-        style={{ opacity: 1, transform: 'none' }}
+        style={{ opacity: 1, transform: "none" }}
         onSubmit={handleSignup}
       >
         <img
@@ -49,48 +55,48 @@ const SignUp = ({closeBtn , onSwitchToSignUp}) => {
           className="absolute top-5 right-5 w-4 cursor-pointer"
           onClick={closeBtn}
         />
-        <h1 className="text-center text-neutral-700 text-2xl font-medium mb-1">Sign Up</h1>
+        <h1 className="text-center text-neutral-700 text-2xl font-medium mb-1">
+          Sign Up
+        </h1>
         <p className="text-sm text-center mb-4">Please sign up to continue</p>
 
         <div className="border border-gray-300 px-5 py-2 flex items-center gap-2 rounded-full mt-5">
-          <img src={assets.profile_icon} alt="User Icon" className="w-5" /> 
+          <img src={assets.profile_icon} alt="User Icon" className="w-5" />
           <input
-                value={name}
-
+            value={name}
             className="outline-none text-sm font-medium w-full"
             type="text"
             placeholder="Full Name"
             required
-                onChange={(e)=>{setName(e.target.value)}}
-
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
         </div>
 
         <div className="border border-gray-300 px-5 py-2 flex items-center gap-2 rounded-full mt-4">
           <img src={assets.email_icon} alt="Email Icon" className="w-4" />
           <input
-                value={emailInput}
-
+            value={emailInput}
             className="outline-none text-sm font-medium w-full"
             type="email"
             placeholder="Email ID"
             required
-                onChange={(e)=>setEmailInput(e.target.value)}
-
+            onChange={(e) => setEmailInput(e.target.value)}
           />
         </div>
 
         <div className="border border-gray-300 px-5 py-2 flex items-center gap-2 rounded-full mt-4">
-          <img src={assets.lock_icon} alt="Password Icon" className="w-3" /> 
+          <img src={assets.lock_icon} alt="Password Icon" className="w-3" />
           <input
-                value={passwordInput}
-
+            value={passwordInput}
             className="outline-none text-sm font-medium w-full"
             type="password"
             placeholder="Password"
             required
-                onChange={(e)=>{setPasswordInput(e.target.value)}}
-
+            onChange={(e) => {
+              setPasswordInput(e.target.value);
+            }}
           />
         </div>
 
@@ -106,10 +112,13 @@ const SignUp = ({closeBtn , onSwitchToSignUp}) => {
 
         {/* Login Redirect */}
         <p className="mt-5 text-center text-md">
-          Already have an account?{' '}
-          <span className="text-blue-600 cursor-pointer"
-          onClick={onSwitchToSignUp}
-          >Login</span>
+          Already have an account?{" "}
+          <span
+            className="text-blue-600 cursor-pointer"
+            onClick={onSwitchToSignUp}
+          >
+            Login
+          </span>
         </p>
       </form>
     </div>
