@@ -2,14 +2,12 @@ import React from 'react';
 import { assets } from '../assets/assets';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const SignUp = ({closeBtn , onSwitchToSignUp}) => {
   const {emailInput , setEmailInput , passwordInput , setPasswordInput , name , setName , setShowLogin }  = useContext(AppContext)
 
-  // const navigate = useNavigate()
   
   const handleSignup = async (e) => {
   e.preventDefault();
