@@ -7,6 +7,7 @@ import Login from './Login.jsx';
 
 const Navbar = () => {
   const {user , setUser , showLogin , setShowLogin , creditBalance , getCredit } = useContext(AppContext)
+   const [isOpen, setIsOpen] = useState(false);
   
   const navigator = useNavigate();
 
@@ -20,9 +21,17 @@ const Navbar = () => {
   const user = localStorage.removeItem('user');
     setUser(null);
 }
-  useEffect(()=>{
-    // handleLogOut()
-  }, [])
+useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (!e.target.closest('.profile-menu')) {
+      setIsOpen(false);
+    }
+  };
+
+  document.addEventListener('click', handleClickOutside);
+  return () => document.removeEventListener('click', handleClickOutside);
+}, []);
+
   return (
 
 
@@ -44,19 +53,26 @@ const Navbar = () => {
     
             <div className="flex items-center gap-2">
               <p className="max-sm:hidden pl-4 text-gray-600">Hi, {user?.name}</p>
-              <div className='relative group'>
+              <div className='relative profile-menu'>
                 
                 <img
                 src={assets.profile_icon}
                 className="w-10 h-10 rounded-full cursor-pointer border border-gray-300 drop-shadow-2xl"
                 alt="Profile"
+                onClick={() => setIsOpen((prev) => !prev)}
                 />
-              <div className='absolute hidden group-hover:block top-0 right-0 z-10 pt-12 text-black rounded'>
+                {isOpen && 
+              <div className='absolute top-0 right-0 z-10 pt-12 text-black rounded'>
                 <ul className='list-none m-0 p-2 bg-white rounded-md border text-sm'>
-               <li className='py-1 px-3 cursor-pointer whitespace-nowrap' onClick={handleLogOut}>Log out</li>
+               <li className='py-1 px-3 cursor-pointer whitespace-nowrap' onClick={()=>{
+                setIsOpen(false)
+                 handleLogOut()
+              }
+              }>Log out</li>
                 </ul>
 
               </div>
+              }
                 </div>
             </div>
           </div>

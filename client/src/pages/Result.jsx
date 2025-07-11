@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 
 const Result = () => {
   const {prompt, setprompt , isLoading , setIsLoading ,image , setImage ,isImageLoaded , setIsImageLoaded , setCreditBalance } = useContext(AppContext)
-
   const handleInput = (e) => {
     setprompt(e.target.value);
   };
@@ -41,52 +40,72 @@ const Result = () => {
     setIsLoading(false);
   }
 };
-
   return (
     <form
-      className="flex flex-col min-h-[90vh] justify-center items-center px-4"
-      onSubmit={handleSubmit}
-    >
-      <div className="relative mb-6">
-        <img
-          className="max-w-sm w-full rounded-lg shadow-md"
-          src={image}
-          alt="Sample preview"
-        />
-        <span className="absolute bottom-0 left-0 h-1 bg-blue-400 w-0 transition-all duration-300" />
-      </div>
+  className="flex flex-col min-h-[90vh] justify-center items-center px-4"
+  onSubmit={handleSubmit}
+>
+  {/* Image Display */}
+  {image && (
+    <div className="relative mb-6 w-full max-w-md">
+      <img
+        className="w-full rounded-lg shadow-md object-cover"
+        src={image}
+        alt="Generated preview"
+      />
+    </div>
+  )}
 
-      {isLoading && (
-        <p className="text-sm text-gray-600 mb-4 animate-pulse">Generating your image...</p>
-      )}
-      {
-        !isImageLoaded ? (
+  {/* Loading Text */}
+  {isLoading && (
+    <p className="text-sm text-gray-600 mb-4 animate-pulse">
+      Generating your image...
+    </p>
+  )}
 
-          <div className="flex w-full max-w-xl bg-gray-700 text-white text-sm p-1 rounded-full shadow-md">
-        <input
-          type="text"
-          placeholder="Describe the image you want to generate..."
-          className="flex-1 bg-transparent outline-none px-4 py-2 rounded-full placeholder-gray-300"
-          value={prompt}
-          onChange={handleInput}
-          />
-        <button
-          type="submit"
-          className="bg-zinc-900 hover:bg-zinc-800 px-6 sm:px-10 py-2 rounded-full transition-all duration-200 cursor-pointer"
-          disabled={isLoading || prompt.trim() === ''}
-          >
-          {isLoading ? 'Generating...' : 'Generate'}
-        </button>
-      </div>
-          ) : (
-            <div className="flex gap-4 mt-4">
-          <p className="border border-gray-800 rounded-full px-4 py-2 cursor-pointer transition-all duration-200"
-          onClick={()=>setIsImageLoaded(null)}>Generate Another</p>
-          <a href={image} download className="bg-zinc-900 hover:bg-zinc-800 px-6 sm:px-10 py-2 transition-all duration-200 rounded-full text-white cursor-pointer">Download</a>
-          </div>
-          )
-        }
-        </form>
+  {/* Input Field */}
+  {!isImageLoaded ? (
+    <div className="w-full max-w-xl space-y-2 sm:space-y-0 sm:space-x-2 flex flex-col sm:flex-row">
+  <input
+    type="text"
+    placeholder="Describe the image you want to generate..."
+    className="flex-1 bg-gray-700 text-white text-sm outline-none px-4 py-2 rounded-full placeholder-gray-300 shadow-md"
+    value={prompt}
+    onChange={handleInput}
+  />
+  <button
+    type="submit"
+    className="bg-zinc-900 hover:bg-zinc-800 px-6 py-2 rounded-full text-white text-sm transition duration-200 shadow-md"
+    disabled={isLoading || prompt.trim() === ""}
+  >
+    {isLoading ? "Generating..." : "Generate"}
+  </button>
+</div>
+
+  ) : (
+    // Buttons after image is loaded
+    <div className="flex flex-col sm:flex-row gap-4 mt-4">
+      <button
+        onClick={() => {
+          setIsImageLoaded(null);
+          setImage('');
+          setprompt('');
+        }}
+        className="border border-gray-800 rounded-full px-6 py-2 cursor-pointer transition duration-200"
+      >
+        Generate Another
+      </button>
+      <a
+        href={image}
+        download
+        className="bg-zinc-900 hover:bg-zinc-800 px-6 py-2 rounded-full text-white text-center"
+      >
+        Download
+      </a>
+    </div>
+  )}
+</form>
+
   );
 };
 
