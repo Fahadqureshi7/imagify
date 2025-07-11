@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 import { useContext } from 'react'
 import {toast} from 'react-hot-toast'
+import 'dotenv/config'
 
 
 const Login = ({closeBtn , onSwitchToLogin}) => {
@@ -13,7 +14,7 @@ const Login = ({closeBtn , onSwitchToLogin}) => {
   const handleLoginUser = async (e) => {
   e.preventDefault();
   try {
-    const response = await axios.post('http://localhost:3000/api/auth/login', {
+    const response = await axios.post(`${process.env.BACKEND_URL}/api/auth/login`, {
       email: emailInput,
       password: passwordInput,
     });
